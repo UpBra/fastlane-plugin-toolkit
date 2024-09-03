@@ -15,8 +15,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gem-
     - name: Install asdf & tools
-      uses: asdf-vm/actions/install@v3.0.2
-      continue-on-error: true
+      uses: asdf-vm/actions/install@v3
     - name: Install dependencies
       run: bundle check || bundle install --jobs=4 --retry=3 --path vendor/bundle
     - name: Run tests
