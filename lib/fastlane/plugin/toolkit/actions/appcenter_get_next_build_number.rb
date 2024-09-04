@@ -25,8 +25,8 @@ module Fastlane
 				begin
 					result = other_action.appcenter_fetch_version_number(options)
 					build_number = result.fetch('build_number')
-				rescue => error
-					puts error
+				rescue StandardError => e
+					puts(e)
 					build_number = 0
 				end
 

@@ -6,10 +6,7 @@
 
 class Profile
 
-	attr_accessor :platform
-	attr_accessor :configuration
-	attr_accessor :build_number
-	attr_accessor :values
+	attr_accessor :platform, :configuration, :build_number, :values
 
 	def initialize(params = {})
 		self.platform = params[:platform]

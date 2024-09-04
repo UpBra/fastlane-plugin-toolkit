@@ -8,13 +8,20 @@ module Fastlane
 
 		class FirebaseGetNextBuildNumberAction < Action
 
-			module KEY
-				LATEST_RELEASE = :latest_release
-			end
+			FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-firebase_app_distribution', require_gem: true)
 
 			def self.run(params)
-				latest_release = params[KEY::LATEST_RELEASE]
-				latest_release ||= lane_context[SharedValues::FIREBASE_APP_DISTRO_LATEST_RELEASE]
+				available = Fastlane::Actions::FirebaseAppDistributionGetLatestReleaseAction.available_options.map(&:key)
+				options = params.values.clone.keep_if { |k,v| available.include?(k) }
+				options.transform_keys(&:to_sym)
+
+				FastlaneCore::PrintTable.print_values(
+					config: options,
+					title: 'Summary for pft_build_number_firebase',
+					mask_keys: [:cli_token, :service_credentials_file]
+				)
+
+				latest_release = other_action.firebase_app_distribution_get_latest_release(options)
 				latest_release ||= {}
 				build_number = latest_release[:buildVersion].to_i
 				build_number = build_number.next
@@ -38,19 +45,10 @@ module Fastlane
 			end
 
 			def self.available_options
-				[
-					FastlaneCore::ConfigItem.new(
-						key: KEY::LATEST_RELEASE,
-						env_name: 'FIREBASE_GET_NEXT_BUILD_NUMBER_LATEST_RELEASE',
-						description: 'API Token for FirebaseGetNextBuildNumberAction',
-						optional: true
-					)
-				]
+				Fastlane::Actions::FirebaseAppDistributionGetLatestReleaseAction.available_options
 			end
 
 			def self.output
-				# Define the shared values you are going to provide
-				# Example
 				[
 					['FIREBASE_GET_NEXT_BUILD_NUMBER_CUSTOM_VALUE', 'A description of what this value contains']
 				]
@@ -61,21 +59,11 @@ module Fastlane
 			end
 
 			def self.authors
-				# So no one will ever forget your contribution to fastlane :) You are awesome btw!
-				['Your GitHub/Twitter Name']
+				['UpBra']
 			end
 
-			def self.is_supported?(platform)
-				# you can do things like
-				#
-				#  true
-				#
-				#  platform == :ios
-				#
-				#  [:ios, :mac].include?(platform)
-				#
-
-				platform == :ios
+			def self.is_supported?(_)
+				true
 			end
 		end
 	end
