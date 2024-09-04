@@ -1,7 +1,7 @@
 module Fastlane
 
 	module Actions
-	
+
 		module SharedValues
 			APPCENTER_GET_NEXT_BUILD_NUMBER_RESULT = :APPCENTER_GET_NEXT_BUILD_NUMBER_RESULT
 		end
@@ -9,29 +9,31 @@ module Fastlane
 		class AppcenterGetNextBuildNumberAction < Action
 
 			FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-appcenter', require_gem: true)
-	
+
 			def self.run(params)
 				FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-appcenter', require_gem: true)
 				available = Fastlane::Actions::AppcenterFetchVersionNumberAction.available_options.map(&:key)
-				options = params.clone.keep_if { |k,v| available.include?(k) }
+				options = params.values.clone.keep_if { |k,v| available.include?(k) }
+				options.transform_keys(&:to_sym)
 
 				FastlaneCore::PrintTable.print_values(
 					config: options,
-					title: 'Summary for pft_build_number_appcenter',
+					title: 'Summary for appcenter_get_next_build_number',
 					mask_keys: [:api_token]
 				)
 
 				begin
-					result = appcenter_fetch_version_number(options)
+					result = other_action.appcenter_fetch_version_number(options)
 					build_number = result.fetch('build_number')
-				rescue StandardError
+				rescue => error
+					puts error
 					build_number = 0
 				end
 
-				build_number = build_number.to_i.next.to_s if params.fetch(:next, true)
+				build_number = build_number.to_i.next.to_s
 
 				UI.success("Appcenter build number: #{build_number}")
-				lane_context[SharedValues::PFT_BUILD_NUMBER_APPCENTER] = build_number
+				lane_context[SharedValues::APPCENTER_GET_NEXT_BUILD_NUMBER_RESULT] = build_number
 			end
 
 			#####################################################

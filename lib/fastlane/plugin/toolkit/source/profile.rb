@@ -4,8 +4,11 @@
 #
 # ----------------------------------------------------------------------
 
-Profile = Struct.new(:platform, :configuration, :build_number) do
+class Profile
 
+	attr_accessor :platform
+	attr_accessor :configuration
+	attr_accessor :build_number
 	attr_accessor :values
 
 	def initialize(params = {})

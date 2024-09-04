@@ -1,16 +1,16 @@
 module Fastlane
-	
+
 	module Actions
-	
+
 		module SharedValues
 			TOOLKIT_VERSION_CUSTOM_VALUE = :TOOLKIT_VERSION_CUSTOM_VALUE
 		end
 
 		class ToolkitVersionAction < Action
-	
+
 			def self.run(params)
 				# fastlane will take care of reading in the parameter and fetching the environment variable:
-				UI.message("Parameter API Token: #{params[:api_token]}")
+				UI.message("Parameter API Token: #{params[:profile]}")
 
 				# sh "shellcommand ./path"
 
@@ -37,26 +37,10 @@ module Fastlane
 				# Below a few examples
 				[
 					FastlaneCore::ConfigItem.new(
-						key: :api_token,
-						# The name of the environment variable
-						env_name: 'FL_TOOLKIT_VERSION_API_TOKEN',
-						# a short description of this parameter
+						key: :profile,
+						env_name: 'TOOLKIT_PROFILE',
 						description: 'API Token for ToolkitVersionAction',
-						verify_block: proc do |value|
-							unless value && !value.empty?
-								UI.user_error!("No API token for ToolkitVersionAction given, pass using `api_token: 'token'`")
-							end
-							# UI.user_error!("Couldn't find file at path '#{value}'") unless File.exist?(value)
-						end
-					),
-					FastlaneCore::ConfigItem.new(
-						key: :development,
-						env_name: 'FL_TOOLKIT_VERSION_DEVELOPMENT',
-						description: 'Create a development certificate instead of a distribution one',
-						# true: verifies the input is a string, false: every kind of value
-						is_string: false,
-						# the default value if the user didn't provide one
-						default_value: false
+						type: Fastlane::FastFile::Profile
 					)
 				]
 			end

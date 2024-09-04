@@ -3,23 +3,23 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'fastlane/plugin/toolkit/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'fastlane-plugin-toolkit'
-  spec.version       = Fastlane::Toolkit::VERSION
-  spec.author        = 'Blair Replogle'
-  spec.email         = 'UpBra@users.noreply.github.com'
+	spec.name          = 'fastlane-plugin-toolkit'
+	spec.version       = Fastlane::Toolkit::VERSION
+	spec.author        = 'Blair Replogle'
+	spec.email         = 'UpBra@users.noreply.github.com'
 
-  spec.summary       = 'a short summary'
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-toolkit"
-  spec.license       = "MIT"
+	spec.summary       = 'a short summary'
+	# spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-toolkit"
+	spec.license       = "MIT"
 
-  spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
-  spec.require_paths = ['lib']
-  spec.metadata['rubygems_mfa_required'] = 'true'
-  spec.required_ruby_version = '>= 2.6'
+	spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
+	spec.require_paths = ['lib']
+	spec.metadata['rubygems_mfa_required'] = 'true'
+	spec.required_ruby_version = '>= 2.6'
 
-  # Don't add a dependency to fastlane or fastlane_re
-  # since this would cause a circular dependency
+	# Don't add a dependency to fastlane or fastlane_re
+	# since this would cause a circular dependency
 
-  # spec.add_dependency 'your-dependency', '~> 1.0.0'
-  spec.add_dependency('fastlane-plugin-appcenter')
+	# spec.add_dependency 'your-dependency', '~> 1.0.0'
+	spec.add_dependency('fastlane-plugin-appcenter')
 end
