@@ -22,4 +22,5 @@ Gem::Specification.new do |spec|
 
 	# spec.add_dependency 'your-dependency', '~> 1.0.0'
 	spec.add_dependency('fastlane-plugin-appcenter')
+	spec.add_dependency('fastlane-plugin-firebase_app_distribution')
 end

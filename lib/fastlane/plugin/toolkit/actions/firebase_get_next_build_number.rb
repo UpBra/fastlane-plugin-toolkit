@@ -1,7 +1,7 @@
 module Fastlane
 
 	module Actions
-	
+
 		module SharedValues
 			FIREBASE_GET_NEXT_BUILD_NUMBER_RESULT = :FIREBASE_GET_NEXT_BUILD_NUMBER_RESULT
 		end

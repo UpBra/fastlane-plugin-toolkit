@@ -25,3 +25,17 @@ end
 module Global
 
 end
+
+class Settings < Hash
+	attr_accessor :alpha
+	attr_accessor :beta
+	attr_accessor :staging
+	attr_accessor :milestone
+
+	def initialize()
+		self.alpha = {}
+		self.beta = {}
+		self.staging = {}
+		self.milestone = {}
+	end
+end
