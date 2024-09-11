@@ -3,10 +3,10 @@ module Fastlane
 	module Actions
 
 		module SharedValues
-			FIREBASE_GET_NEXT_BUILD_NUMBER_RESULT = :FIREBASE_GET_NEXT_BUILD_NUMBER_RESULT
+			FIREBASE_NEXT_BUILD_NUMBER_RESULT = :FIREBASE_NEXT_BUILD_NUMBER_RESULT
 		end
 
-		class FirebaseGetNextBuildNumberAction < Action
+		class FirebaseNextBuildNumberAction < Action
 
 			FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-firebase_app_distribution', require_gem: true)
 
@@ -27,7 +27,7 @@ module Fastlane
 				build_number = build_number.next
 
 				UI.success("Firebase Build Number: #{build_number}")
-				lane_context[SharedValues::FIREBASE_GET_NEXT_BUILD_NUMBER_RESULT] = build_number.to_s
+				lane_context[SharedValues::FIREBASE_NEXT_BUILD_NUMBER_RESULT] = build_number.to_s
 			end
 
 			#####################################################

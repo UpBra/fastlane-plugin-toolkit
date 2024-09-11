@@ -3,10 +3,10 @@ module Fastlane
 	module Actions
 
 		module SharedValues
-			APPCENTER_GET_NEXT_BUILD_NUMBER_RESULT = :APPCENTER_GET_NEXT_BUILD_NUMBER_RESULT
+			APPCENTER_NEXT_BUILD_NUMBER_RESULT = :APPCENTER_NEXT_BUILD_NUMBER_RESULT
 		end
 
-		class AppcenterGetNextBuildNumberAction < Action
+		class AppcenterNextBuildNumberAction < Action
 
 			FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-appcenter', require_gem: true)
 
@@ -33,7 +33,7 @@ module Fastlane
 				build_number = build_number.to_i.next.to_s
 
 				UI.success("Appcenter build number: #{build_number}")
-				lane_context[SharedValues::APPCENTER_GET_NEXT_BUILD_NUMBER_RESULT] = build_number
+				lane_context[SharedValues::APPCENTER_NEXT_BUILD_NUMBER_RESULT] = build_number
 			end
 
 			#####################################################
