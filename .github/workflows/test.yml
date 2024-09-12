@@ -3,8 +3,8 @@ name: Test
 on:
   push:
     branches: [ $default-branch ]
-  pull_request:
-    branches: [ $default-branch ]
+  pull_request_target:
+    types: [assigned, opened, synchronize, reopened]
 
 jobs:
   test:
