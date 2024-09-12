@@ -111,7 +111,7 @@ class TerminalTable
 		@title = ''
 	end
 
-	def addEnvironmentVariable(key, upcase: false)
+	def add_environment_variable(key, upcase: false)
 		value = ENV.fetch(key, '')
 		value = value.upcase if upcase
 		rows << [key, value]

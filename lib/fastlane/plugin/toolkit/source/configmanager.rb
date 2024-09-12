@@ -1,9 +1,8 @@
 
 module ConfigManager
 
-	def self.add(filename, platform)
-		@@platforms ||= {}
-		@@platforms[platform] = Config.new(filename)
+	def self.load(filename)
+		Config.new(filename)
 	end
 
 	class Config
