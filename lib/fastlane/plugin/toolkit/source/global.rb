@@ -100,16 +100,30 @@ module Global
 	end
 end
 
-class Settings < Hash
-	attr_accessor :alpha
-	attr_accessor :beta
-	attr_accessor :staging
-	attr_accessor :milestone
+# Terminal Table
 
-	def initialize()
-		self.alpha = {}
-		self.beta = {}
-		self.staging = {}
-		self.milestone = {}
+class TerminalTable
+
+	attr_accessor :rows
+	attr_accessor :title
+
+	def initialize
+		@rows = []
+		@title = ''
+	end
+
+	def addEnvironmentVariable(key, upcase: false)
+		value = ENV.fetch(key, '')
+		value = value.upcase if upcase
+		rows << [key, value]
+	end
+
+	def display()
+		params = {:title => title.blue, :rows => rows}
+		table = Terminal::Table.new(params)
+
+		puts('')
+		puts(table)
+		puts('')
 	end
 end
