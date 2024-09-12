@@ -6,7 +6,7 @@
 
 module Jenkins
 
-	def self.print()
+	def self.print
 		table = TerminalTable.new
 		table.title = "Jenkins Environment Summary"
 		table.addEnvironmentVariable('JOB_NAME')
@@ -18,6 +18,6 @@ module Jenkins
 			table.addEnvironmentVariable('CHANGE_BRANCH')
 		end
 
-		table.display()
+		table.display
 	end
 end

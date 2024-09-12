@@ -104,8 +104,7 @@ end
 
 class TerminalTable
 
-	attr_accessor :rows
-	attr_accessor :title
+	attr_accessor :rows, :title
 
 	def initialize
 		@rows = []
@@ -118,8 +117,8 @@ class TerminalTable
 		rows << [key, value]
 	end
 
-	def display()
-		params = {:title => title.blue, :rows => rows}
+	def display
+		params = {title: title.blue, rows: rows}
 		table = Terminal::Table.new(params)
 
 		puts('')

@@ -20,12 +20,14 @@ module Fastlane
 				commit = params[Key::COMMIT]
 				between = previous && commit && previous != commit
 
-				other_action.changelog_from_git_commits(
-					between: [
-						previous,
-						commit
-					]
-				) if between
+				if between
+					other_action.changelog_from_git_commits(
+						between: [
+							previous,
+							commit
+						]
+					)
+				end
 
 				# Fallback to last_git_commit
 				lane_context[SharedValues::FL_CHANGELOG] ||= other_action.last_git_commit[:message]
