@@ -45,6 +45,8 @@ Metrics/BlockLength:
   Enabled: false
 Metrics/ModuleLength:
   Enabled: false
+Metrics/PerceivedComplexity:
+  Max: 10
 Naming/VariableNumber:
   Enabled: false
 Style/MissingRespondToMissing:

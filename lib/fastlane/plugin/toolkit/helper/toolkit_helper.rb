@@ -8,6 +8,9 @@ module Fastlane
 
 		module Toolkit
 
+			def self.test_message
+				UI.message("test message")
+			end
 		end
 	end
 end

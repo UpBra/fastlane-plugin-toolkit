@@ -1,9 +1,10 @@
-describe Fastlane::Actions::ToolkitAction do
-	describe '#run' do
-		it 'prints a message' do
-			expect(Fastlane::UI).to receive(:message).with("The toolkit plugin is working!")
+describe Fastlane::Helper::Toolkit do
 
-			Fastlane::Actions::ToolkitAction.run(nil)
+	describe 'test message' do
+		it 'prints a message' do
+			expect(Fastlane::UI).to receive(:message).with("test message")
+
+			Fastlane::Helper::Toolkit.test_message
 		end
 	end
 end

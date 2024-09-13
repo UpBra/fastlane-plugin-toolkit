@@ -78,7 +78,7 @@ module ConfigManager
 		# block - Block to execute to override configuration values.
 		#
 		def for_configuration(configuration_name)
-			options = [Global.configuration, ENV.fetch("FASTLANE_CONFIGURATION_NAME")].map(&:to_s)
+			options = [Global.configuration, ENV.fetch("FASTLANE_CONFIGURATION_NAME", nil)].map(&:to_s)
 			value = configuration_name.to_s
 
 			if options.include?(value)
