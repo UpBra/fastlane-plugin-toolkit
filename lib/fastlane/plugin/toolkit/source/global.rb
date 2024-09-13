@@ -29,6 +29,7 @@ module Fastlane::Actions::SharedValues
 	CONFIGURATION = :GLOBAL_CONFIGURATION
 	DEPLOY = :GLOBAL_DEPLOY
 	NOTIFY = :GLOBAL_NOTIFY
+	IS_CI = :GLOBAL_IS_CI
 end
 
 module Global
@@ -42,6 +43,7 @@ module Global
 		self.configuration = options.fetch(:configuration, :beta).to_sym
 		self.deploy = options.fetch(:deploy, false)
 		self.notify = options.fetch(:notify, false)
+		self.is_ci = FastlaneCore::Helper.ci?
 	end
 end
 
@@ -97,6 +99,14 @@ module Global
 
 	def self.notify=(value)
 		lane_context[SharedValues::NOTIFY] = value
+	end
+
+	def self.is_ci?
+		lane_context[SharedValues::IS_CI] ||= FastlaneCore::Helper.ci?
+	end
+
+	def self.is_ci=(value)
+		lane_context[SharedValues::IS_CI] = value.to_s.downcase == 'true'
 	end
 end
 
