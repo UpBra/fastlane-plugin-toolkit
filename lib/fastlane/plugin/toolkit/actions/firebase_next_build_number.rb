@@ -35,13 +35,7 @@ module Fastlane
 			#####################################################
 
 			def self.description
-				'A short description with <= 80 characters of what this action does'
-			end
-
-			def self.details
-				# Optional:
-				# this is your chance to provide a more detailed description of this action
-				'You can use this action to do cool things...'
+				'Returns the next build number to use by fetching the latest build from Firebase and incrementing it by 1'
 			end
 
 			def self.available_options

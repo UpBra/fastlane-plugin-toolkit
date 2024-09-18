@@ -41,11 +41,7 @@ module Fastlane
 			#####################################################
 
 			def self.description
-				Fastlane::Actions::AppcenterFetchVersionNumberAction.description
-			end
-
-			def self.details
-				Fastlane::Actions::AppcenterFetchVersionNumberAction.details
+				'Returns the next build number to use by fetching the latest build from Appcenter and incrementing it by 1'
 			end
 
 			def self.available_options

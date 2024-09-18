@@ -18,12 +18,12 @@ module Fastlane
 					mask_keys: [:cli_token, :service_credentials_file]
 				)
 
-				if params[:ipa_path] || params[:apk_path]
-					distribute_apps(params)
-				end
-
 				if params[:dsym_path] || params[:dsym_paths]
 					distriibute_dsym(params)
+				end
+
+				if params[:ipa_path] || params[:apk_path] || params[:android_artifact_path]
+					distribute_apps(params)
 				end
 			end
 
@@ -39,7 +39,7 @@ module Fastlane
 			def self.distriibute_dsym(params)
 				return unless params[:app]
 				return unless params[:googleservice_info_plist_path]
-				return unless params[:dsym_path]
+				return unless params[:dsym_path] || params[:dsym_paths]
 
 				available = Fastlane::Actions::UploadSymbolsToCrashlyticsAction.available_options.map(&:key)
 				options = params.values.clone.keep_if { |k,v| available.include?(k) }
@@ -52,13 +52,14 @@ module Fastlane
 			end
 
 			def self.update_status(params)
-				app_display_name = params[:name]
-				properties = lane_context[SharedValues::FIREBASE_APP_DISTRO_RELEASE]
+				return unless properties ||= lane_context[SharedValues::FIREBASE_APP_DISTRO_RELEASE]
+				return unless name ||= params[:name]
+
 				version = properties[:displayVersion]
 				build_number = properties[:buildVersion]
-				name = [app_display_name, version, "(#{build_number})"].join(' ')
+				app_display_name = [name, version, "(#{build_number})"].join(' ')
 
-				lane_context[SharedValues::FIREBASE_DEPLOY_APP_DISPLAY_NAME] = name
+				lane_context[SharedValues::FIREBASE_DEPLOY_APP_DISPLAY_NAME] = app_display_name
 				lane_context[SharedValues::FIREBASE_DEPLOY_APP_CONSOLE_URL] = properties[:firebaseConsoleUri]
 			end
 
