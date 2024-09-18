@@ -16,17 +16,21 @@ module Fastlane
 				options.transform_keys(&:to_sym)
 
 				FastlaneCore::PrintTable.print_values(
-					config: params,
+					config: options,
 					title: 'Summary for appcenter_deploy',
 					mask_keys: [:api_token]
 				)
 
-				appcenter_upload(params)
+				other_action.appcenter_upload(options)
+				update_status(options)
+			end
 
-				properties = lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]
-				app_display_name = properties['app_display_name']
-				version = properties['short_version']
-				build_number = properties['version']
+			def self.update_status(params)
+				return unless build_info ||= lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]
+				return unless app_display_name ||= build_info['app_display_name']
+				return unless version ||= build_info['short_version']
+				return unless build_number ||= build_info['version']
+
 				name = [app_display_name, version, "(#{build_number})"].join(' ')
 				lane_context[SharedValues::APPCENTER_DEPLOY_DISPLAY_NAME] = name
 			end
@@ -36,27 +40,21 @@ module Fastlane
 			#####################################################
 
 			def self.description
-				'A short description with <= 80 characters of what this action does'
+				'Wrapper for appcenter_upload action'
 			end
 
 			def self.details
-				'You can use this action to do cool things...'
+				'Constructs app display name from appcenter build information'
 			end
 
 			def self.available_options
-				[
-					Fastlane::Actions::AppcenterUploadAction.available_options
-				]
+				Fastlane::Actions::AppcenterUploadAction.available_options
 			end
 
 			def self.output
 				[
-					['TLK_APPCENTER_DEPLOY_CUSTOM_VALUE', 'A description of what this value contains']
+					['APPCENTER_DEPLOY_DISPLAY_NAME', 'Constructed app display name from name version and build number']
 				]
-			end
-
-			def self.return_value
-				"Constructed display name from appcenter build information. name version and build number"
 			end
 
 			def self.authors

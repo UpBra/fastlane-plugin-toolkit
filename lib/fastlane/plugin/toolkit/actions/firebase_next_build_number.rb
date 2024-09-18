@@ -3,7 +3,7 @@ module Fastlane
 	module Actions
 
 		module SharedValues
-			FIREBASE_NEXT_BUILD_NUMBER_RESULT = :FIREBASE_NEXT_BUILD_NUMBER_RESULT
+			FIREBASE_NEXT_BUILD_NUMBER = :FIREBASE_NEXT_BUILD_NUMBER
 		end
 
 		class FirebaseNextBuildNumberAction < Action
@@ -27,7 +27,7 @@ module Fastlane
 				build_number = build_number.next
 
 				UI.success("Firebase Build Number: #{build_number}")
-				lane_context[SharedValues::FIREBASE_NEXT_BUILD_NUMBER_RESULT] = build_number.to_s
+				lane_context[SharedValues::FIREBASE_NEXT_BUILD_NUMBER] = build_number.to_s
 			end
 
 			#####################################################
@@ -35,13 +35,7 @@ module Fastlane
 			#####################################################
 
 			def self.description
-				'A short description with <= 80 characters of what this action does'
-			end
-
-			def self.details
-				# Optional:
-				# this is your chance to provide a more detailed description of this action
-				'You can use this action to do cool things...'
+				'Returns the next build number to use by fetching the latest build from Firebase and incrementing it by 1'
 			end
 
 			def self.available_options

@@ -3,7 +3,7 @@ module Fastlane
 	module Actions
 
 		module SharedValues
-			APPCENTER_NEXT_BUILD_NUMBER_RESULT = :APPCENTER_NEXT_BUILD_NUMBER_RESULT
+			APPCENTER_NEXT_BUILD_NUMBER = :APPCENTER_NEXT_BUILD_NUMBER
 		end
 
 		class AppcenterNextBuildNumberAction < Action
@@ -33,7 +33,7 @@ module Fastlane
 				build_number = build_number.to_i.next.to_s
 
 				UI.success("Appcenter build number: #{build_number}")
-				lane_context[SharedValues::APPCENTER_NEXT_BUILD_NUMBER_RESULT] = build_number
+				lane_context[SharedValues::APPCENTER_NEXT_BUILD_NUMBER] = build_number
 			end
 
 			#####################################################
@@ -41,11 +41,7 @@ module Fastlane
 			#####################################################
 
 			def self.description
-				Fastlane::Actions::AppcenterFetchVersionNumberAction.description
-			end
-
-			def self.details
-				Fastlane::Actions::AppcenterFetchVersionNumberAction.details
+				'Returns the next build number to use by fetching the latest build from Appcenter and incrementing it by 1'
 			end
 
 			def self.available_options
