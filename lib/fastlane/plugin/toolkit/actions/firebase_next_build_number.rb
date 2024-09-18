@@ -3,7 +3,7 @@ module Fastlane
 	module Actions
 
 		module SharedValues
-			FIREBASE_NEXT_BUILD_NUMBER_RESULT = :FIREBASE_NEXT_BUILD_NUMBER_RESULT
+			FIREBASE_NEXT_BUILD_NUMBER = :FIREBASE_NEXT_BUILD_NUMBER
 		end
 
 		class FirebaseNextBuildNumberAction < Action
@@ -27,7 +27,7 @@ module Fastlane
 				build_number = build_number.next
 
 				UI.success("Firebase Build Number: #{build_number}")
-				lane_context[SharedValues::FIREBASE_NEXT_BUILD_NUMBER_RESULT] = build_number.to_s
+				lane_context[SharedValues::FIREBASE_NEXT_BUILD_NUMBER] = build_number.to_s
 			end
 
 			#####################################################
