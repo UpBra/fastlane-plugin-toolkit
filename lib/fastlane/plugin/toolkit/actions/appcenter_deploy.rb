@@ -6,9 +6,9 @@ module Fastlane
 			APPCENTER_DEPLOY_DISPLAY_NAME = :APPCENTER_DEPLOY_DISPLAY_NAME
 		end
 
-		class AppcenterDeployAction < AppcenterUploadAction
+		FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-appcenter', require_gem: true)
 
-			FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-appcenter', require_gem: true)
+		class AppcenterDeployAction < AppcenterUploadAction
 
 			def self.run(params)
 				FastlaneCore::PrintTable.print_values(
