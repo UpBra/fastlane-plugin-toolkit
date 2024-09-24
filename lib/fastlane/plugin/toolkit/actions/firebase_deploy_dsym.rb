@@ -1,3 +1,12 @@
+# -------------------------------------------------------------------------
+#
+# firebase_deploy_dsym
+# Alias for the `upload_symbols_to_crashlytics` action with extras
+#
+# -------------------------------------------------------------------------
+
+require 'fastlane/actions/upload_symbols_to_crashlytics'
+
 module Fastlane
 
 	module Actions

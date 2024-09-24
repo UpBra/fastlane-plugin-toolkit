@@ -1,3 +1,10 @@
+# -------------------------------------------------------------------------
+#
+# appcenter_next_build_number
+# Alias for the `appcenter_fetch_version_number` action with extras
+#
+# -------------------------------------------------------------------------
+
 module Fastlane
 
 	module Actions

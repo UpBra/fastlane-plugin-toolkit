@@ -1,3 +1,10 @@
+# -------------------------------------------------------------------------
+#
+# firebase_deploy
+# Alias for the `firebase_app_distribution` action with extras
+#
+# -------------------------------------------------------------------------
+
 module Fastlane
 
 	module Actions

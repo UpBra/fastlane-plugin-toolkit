@@ -1,3 +1,10 @@
+# -------------------------------------------------------------------------
+#
+# firebase_next_build_number
+# Alias for the `firebase_app_distribution_get_latest_release` action with extras
+#
+# -------------------------------------------------------------------------
+
 module Fastlane
 
 	module Actions

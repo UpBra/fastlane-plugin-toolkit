@@ -1,3 +1,10 @@
+# -------------------------------------------------------------------------
+#
+# appcenter_deploy
+# Alias for the `appcenter_upload` action with extras
+#
+# -------------------------------------------------------------------------
+
 module Fastlane
 
 	module Actions
