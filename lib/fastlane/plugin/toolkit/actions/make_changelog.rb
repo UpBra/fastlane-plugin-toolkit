@@ -1,10 +1,12 @@
+# -------------------------------------------------------------------------
+#
+# make_changelog
+#
+# -------------------------------------------------------------------------
+
 module Fastlane
 
 	module Actions
-
-		module SharedValues
-			GET_DEPLOY_CHANGELOG_RESULT = :GET_DEPLOY_CHANGELOG_RESULT
-		end
 
 		class MakeChangelogAction < Action
 
@@ -43,12 +45,11 @@ module Fastlane
 			#####################################################
 
 			def self.description
-				'A short description with <= 80 characters of what this action does'
+				'Generates changelog'
 			end
 
 			def self.details
-				# Optional:
-				'You can use this action to do cool things...'
+				'Uses changelog_from_git_commits or last_git_commit depending on what is available'
 			end
 
 			def self.available_options
@@ -72,20 +73,16 @@ module Fastlane
 
 			def self.output
 				[
-					['GET_DEPLOY_CHANGELOG_CUSTOM_VALUE', 'A description of what this value contains']
+					['FL_CHANGELOG', 'Generated changelog']
 				]
 			end
 
-			def self.return_value
-				# If your method provides a return value, you can describe here what it does
-			end
-
 			def self.authors
-				['Your GitHub/Twitter Name']
+				['UpBra']
 			end
 
-			def self.is_supported?(platform)
-				platform == :ios
+			def self.is_supported?(_)
+				true
 			end
 		end
 	end
