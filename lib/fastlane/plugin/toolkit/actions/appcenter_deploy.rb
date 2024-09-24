@@ -6,23 +6,19 @@ module Fastlane
 			APPCENTER_DEPLOY_DISPLAY_NAME = :APPCENTER_DEPLOY_DISPLAY_NAME
 		end
 
-		class AppcenterDeployAction < Action
+		class AppcenterDeployAction < AppcenterUploadAction
 
 			FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-appcenter', require_gem: true)
 
 			def self.run(params)
-				available = Fastlane::Actions::AppcenterUploadAction.available_options.map(&:key)
-				options = params.values.clone.keep_if { |k,v| available.include?(k) }
-				options.transform_keys(&:to_sym)
-
 				FastlaneCore::PrintTable.print_values(
-					config: options,
+					config: params,
 					title: 'Summary for appcenter_deploy',
 					mask_keys: [:api_token]
 				)
 
-				other_action.appcenter_upload(options)
-				update_status(options)
+				super(params)
+				update_status(params)
 			end
 
 			def self.update_status(params)
