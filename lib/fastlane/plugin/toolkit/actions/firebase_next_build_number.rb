@@ -6,22 +6,18 @@ module Fastlane
 			FIREBASE_NEXT_BUILD_NUMBER = :FIREBASE_NEXT_BUILD_NUMBER
 		end
 
-		class FirebaseNextBuildNumberAction < Action
+		FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-firebase_app_distribution', require_gem: true)
 
-			FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-firebase_app_distribution', require_gem: true)
+		class FirebaseNextBuildNumberAction < FirebaseAppDistributionGetLatestReleaseAction
 
 			def self.run(params)
-				available = Fastlane::Actions::FirebaseAppDistributionGetLatestReleaseAction.available_options.map(&:key)
-				options = params.values.clone.keep_if { |k,v| available.include?(k) }
-				options.transform_keys(&:to_sym)
-
 				FastlaneCore::PrintTable.print_values(
-					config: options,
-					title: 'Summary for pft_build_number_firebase',
+					config: params,
+					title: 'Summary for firebase_next_build_number',
 					mask_keys: [:cli_token, :service_credentials_file]
 				)
 
-				latest_release = other_action.firebase_app_distribution_get_latest_release(options)
+				latest_release = super(params)
 				latest_release ||= {}
 				build_number = latest_release[:buildVersion].to_i
 				build_number = build_number.next
@@ -44,12 +40,12 @@ module Fastlane
 
 			def self.output
 				[
-					['FIREBASE_GET_NEXT_BUILD_NUMBER_CUSTOM_VALUE', 'A description of what this value contains']
+					['FIREBASE_NEXT_BUILD_NUMBER', self.return_value]
 				]
 			end
 
 			def self.return_value
-				# If your method provides a return value, you can describe here what it does
+				'Current build number in firebase + 1'
 			end
 
 			def self.authors
