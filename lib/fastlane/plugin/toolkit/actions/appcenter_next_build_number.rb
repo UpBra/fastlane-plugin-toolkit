@@ -6,24 +6,19 @@ module Fastlane
 			APPCENTER_NEXT_BUILD_NUMBER = :APPCENTER_NEXT_BUILD_NUMBER
 		end
 
-		class AppcenterNextBuildNumberAction < Action
+		FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-appcenter', require_gem: true)
 
-			FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-appcenter', require_gem: true)
+		class AppcenterNextBuildNumberAction < AppcenterFetchVersionNumberAction
 
 			def self.run(params)
-				FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-appcenter', require_gem: true)
-				available = Fastlane::Actions::AppcenterFetchVersionNumberAction.available_options.map(&:key)
-				options = params.values.clone.keep_if { |k,v| available.include?(k) }
-				options.transform_keys(&:to_sym)
-
 				FastlaneCore::PrintTable.print_values(
-					config: options,
-					title: 'Summary for appcenter_get_next_build_number',
+					config: params,
+					title: 'Summary for appcenter_next_build_number',
 					mask_keys: [:api_token]
 				)
 
 				begin
-					result = other_action.appcenter_fetch_version_number(options)
+					result = super(params)
 					build_number = result.fetch('build_number')
 				rescue StandardError => e
 					puts(e)
@@ -50,12 +45,12 @@ module Fastlane
 
 			def self.output
 				[
-					['TLK_BUILD_NUMBER_APPCENTER_CUSTOM_VALUE', 'A description of what this value contains']
+					['APPCENTER_NEXT_BUILD_NUMBER', self.return_value]
 				]
 			end
 
 			def self.return_value
-				# If your method provides a return value, you can describe here what it does
+				'Current build number in Appcenter + 1'
 			end
 
 			def self.authors
