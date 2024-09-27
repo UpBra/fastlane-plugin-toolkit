@@ -49,6 +49,8 @@ Metrics/PerceivedComplexity:
   Max: 10
 Naming/VariableNumber:
   Enabled: false
+Style/AccessorGrouping:
+  Enabled: false
 Style/MissingRespondToMissing:
   Enabled: false
 Style/MultilineBlockChain:

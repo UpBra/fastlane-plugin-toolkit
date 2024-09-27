@@ -11,6 +11,7 @@ module Fastlane
 
 		module SharedValues
 			APPCENTER_DEPLOY_DISPLAY_NAME = :APPCENTER_DEPLOY_DISPLAY_NAME
+			APPCENTER_DEPLOY_APP_CONSOLE_URL = :APPCENTER_DEPLOY_APP_CONSOLE_URL
 		end
 
 		FastlaneRequire.install_gem_if_needed(gem_name: 'fastlane-plugin-appcenter', require_gem: true)
@@ -36,6 +37,11 @@ module Fastlane
 
 				name = [app_display_name, version, "(#{build_number})"].join(' ')
 				lane_context[SharedValues::APPCENTER_DEPLOY_DISPLAY_NAME] = name
+
+				owner_name = params[:owner_name]
+				app_name = params[:app_name]
+				link = "https://appcenter.ms/orgs/#{owner_name}/apps/#{app_name}"
+				lane_context[SharedValues::APPCENTER_DEPLOY_APP_CONSOLE_URL] = link
 			end
 
 			#####################################################
