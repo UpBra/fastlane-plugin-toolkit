@@ -38,15 +38,15 @@ module Status
 	def self.setup_jenkins
 		return unless FastlaneCore::Env.truthy?('JENKINS_HOME')
 
-		self.title = "#{ENV['JOB_NAME']}: #{ENV['BUILD_NUMBER']}"
+		self.title = "#{ENV.fetch('JOB_NAME', nil)}: #{ENV.fetch('BUILD_NUMBER', nil)}"
 
 		if ENV['CHANGE_ID']
-			self.add_fact('CHANGE_BRANCH', ENV['CHANGE_BRANCH'])
-			self.add_fact('CHANGE_TITLE', ENV['CHANGE_TITLE'])
-			self.add_fact('CHANGE_AUTHOR', ENV['CHANGE_AUTHOR'])
+			self.add_fact('CHANGE_BRANCH', ENV.fetch('CHANGE_BRANCH', nil))
+			self.add_fact('CHANGE_TITLE', ENV.fetch('CHANGE_TITLE', nil))
+			self.add_fact('CHANGE_AUTHOR', ENV.fetch('CHANGE_AUTHOR', nil))
 		else
-			self.add_fact('BRANCH', ENV['BRANCH_NAME'])
-			self.add_fact('HASH', ENV['GIT_COMMIT'])
+			self.add_fact('BRANCH', ENV.fetch('BRANCH_NAME', nil))
+			self.add_fact('HASH', ENV.fetch('GIT_COMMIT', nil))
 			self.add_fact('GIT_LOG', `git log -1 --pretty=%B`.strip)
 		end
 	end
@@ -55,7 +55,7 @@ module Status
 		teams_facts = self.facts.map { |fact| {name: fact.name, value: fact.value} }
 		theme_color = success ? self.theme_color : 'FF0000'
 
-		params = {
+		{
 			teams_url: self.teams_webhook,
 			title: self.title,
 			text: self.message,
@@ -67,9 +67,9 @@ module Status
 	end
 
 	def self.slack_params(success: true)
-		payload = self.facts.clone.map { |fact| [fact.name, fact.value] }.to_h
+		payload = self.facts.clone.to_h { |fact| [fact.name, fact.value] }
 
-		params = {
+		{
 			pretext: self.title,
 			message: self.message,
 			slack_url: self.slack_webhook,
