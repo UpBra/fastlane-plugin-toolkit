@@ -10,7 +10,7 @@ module Fastlane
 	module Actions
 
 		module SharedValues
-			APPCENTER_DEPLOY_DISPLAY_NAME = :APPCENTER_DEPLOY_DISPLAY_NAME
+			APPCENTER_DEPLOY_APP_DISPLAY_NAME = :APPCENTER_DEPLOY_APP_DISPLAY_NAME
 			APPCENTER_DEPLOY_APP_CONSOLE_URL = :APPCENTER_DEPLOY_APP_CONSOLE_URL
 		end
 
@@ -36,7 +36,7 @@ module Fastlane
 				return unless build_number ||= build_info['version']
 
 				name = [app_display_name, version, "(#{build_number})"].join(' ')
-				lane_context[SharedValues::APPCENTER_DEPLOY_DISPLAY_NAME] = name
+				lane_context[SharedValues::APPCENTER_DEPLOY_APP_DISPLAY_NAME] = name
 
 				owner_name = params[:owner_name]
 				app_name = params[:app_name]
@@ -62,7 +62,7 @@ module Fastlane
 
 			def self.output
 				[
-					['APPCENTER_DEPLOY_DISPLAY_NAME', 'Constructed app display name from name version and build number']
+					['APPCENTER_DEPLOY_APP_DISPLAY_NAME', 'Constructed app display name from name version and build number']
 				]
 			end
 

@@ -8,17 +8,15 @@
 module Status
 
 	class << self
-		attr_accessor :title, :message
-		attr_accessor :facts, :builds
-		attr_accessor :theme_color
-		attr_accessor :activity_title
-		attr_accessor :activity_subtitle
-		attr_accessor :slack_webhook
-		attr_accessor :teams_webhook
+		attr_accessor :title, :message, :success
+		attr_accessor :facts, :builds, :theme_color
+		attr_accessor :activity_title, :activity_subtitle
+		attr_accessor :slack_webhook, :teams_webhook
 	end
 
 	self.title = ''
-	self.message = ''
+	self.message = 'Succeeded'
+	self.success = true
 	self.facts = []
 	self.builds = []
 	self.theme_color = '321244'
@@ -51,9 +49,14 @@ module Status
 		end
 	end
 
-	def self.teams_params(success: true)
+	def self.failed(exception)
+		self.success = false
+		self.message = "Failed: #{exception.to_s.tail}"
+	end
+
+	def self.teams_params
 		teams_facts = self.facts.map { |fact| {name: fact.name, value: fact.value} }
-		theme_color = success ? self.theme_color : 'FF0000'
+		theme_color = self.success ? self.theme_color : 'FF0000'
 
 		{
 			teams_url: self.teams_webhook,
@@ -66,7 +69,7 @@ module Status
 		}
 	end
 
-	def self.slack_params(success: true)
+	def self.slack_params
 		payload = self.facts.clone.to_h { |fact| [fact.name, fact.value] }
 
 		{
@@ -74,7 +77,27 @@ module Status
 			message: self.message,
 			slack_url: self.slack_webhook,
 			payload: payload,
-			success: success
+			success: self.success
 		}
+	end
+end
+
+module Status
+
+	Actions = Fastlane::Actions
+	SharedValues = Actions::SharedValues
+
+	def self.add_appcenter_facts
+		return unless name ||= Actions.lane_context.fetch(SharedValues::APPCENTER_DEPLOY_APP_DISPLAY_NAME)
+		return unless value ||= Actions.lane_context.fetch(SharedValues::APPCENTER_DEPLOY_APP_CONSOLE_URL)
+
+		Status.add_fact(name, value)
+	end
+
+	def self.add_firebase_facts
+		return unless name ||= Actions.lane_context.fetch(SharedValues::FIREBASE_DEPLOY_APP_DISPLAY_NAME)
+		return unless value ||= Actions.lane_context.fetch(SharedValues::FIREBASE_DEPLOY_APP_CONSOLE_URL)
+
+		Status.add_fact(name, value)
 	end
 end
