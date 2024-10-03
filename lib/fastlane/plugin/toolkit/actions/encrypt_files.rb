@@ -24,8 +24,8 @@ module Fastlane
 				e.encrypt(file_path: path, password: password)
 			rescue FastlaneCore::Interface::FastlaneError
 				raise
-			rescue => error
-				UI.error(error.to_s)
+			rescue StandardError => e
+				UI.error(e.to_s)
 				UI.crash!("Error encrypting '#{path}'")
 			end
 
@@ -42,12 +42,12 @@ module Fastlane
 					FastlaneCore::ConfigItem.new(
 						key: :path,
 						env_name: 'ENCRYPT_FILES_PATH',
-						description: 'Path to folder containing files to encrypt',
+						description: 'Path to folder containing files to encrypt'
 					),
 					FastlaneCore::ConfigItem.new(
 						key: :password,
 						env_name: 'ENCRYPT_FILES_PASSWORD',
-						description: 'Password used to encrypt files',
+						description: 'Password used to encrypt files'
 					)
 				]
 			end

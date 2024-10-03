@@ -21,8 +21,8 @@ module Fastlane
 			def self.decrypt_file(path: nil, password: nil)
 				e = Match::Encryption::MatchFileEncryption.new
 				e.decrypt(file_path: path, password: password)
-			rescue => error
-				UI.error(error.to_s)
+			rescue StandardError => e
+				UI.error(e.to_s)
 				UI.error("Error decrypting '#{path}'")
 			end
 
@@ -39,12 +39,12 @@ module Fastlane
 					FastlaneCore::ConfigItem.new(
 						key: :path,
 						env_name: 'DECRYPT_FILES_PATH',
-						description: 'Path to folder containing files to decrypt',
+						description: 'Path to folder containing files to decrypt'
 					),
 					FastlaneCore::ConfigItem.new(
 						key: :password,
 						env_name: 'DECRYPT_FILES_PASSWORD',
-						description: 'Password used to decrypt files',
+						description: 'Password used to decrypt files'
 					)
 				]
 			end
