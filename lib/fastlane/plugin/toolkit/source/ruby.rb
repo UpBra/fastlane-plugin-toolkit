@@ -12,7 +12,6 @@ class ::String
 		value = self.clone
 		lines = value.lines
 		start = [ lines.count - n, 0 ].max
-		truncated = lines[start..-1].join
-		truncated
+		lines[start..-1].join
 	end
 end
