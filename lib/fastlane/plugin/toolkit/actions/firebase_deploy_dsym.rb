@@ -17,7 +17,7 @@ module Fastlane
 				FastlaneCore::PrintTable.print_values(
 					config: params,
 					title: 'Summary for firebase_deploy_dsym',
-					mask_keys: [:cli_token, :service_credentials_file]
+					mask_keys: [:api_token]
 				)
 
 				super(params)
