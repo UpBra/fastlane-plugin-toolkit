@@ -22,7 +22,7 @@ module Fastlane
 				FastlaneCore::PrintTable.print_values(
 					config: params,
 					title: 'Summary for firebase_deploy',
-					mask_keys: [:firebase_cli_token, :service_credentials_json_data]
+					mask_keys: [:firebase_cli_token, :service_credentials_json_data, :service_credentials_json_data]
 				)
 
 				params[:release_notes] ||= lane_context[SharedValues::FL_CHANGELOG]
