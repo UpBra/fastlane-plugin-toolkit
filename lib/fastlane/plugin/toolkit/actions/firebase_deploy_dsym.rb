@@ -20,8 +20,6 @@ module Fastlane
 					mask_keys: [:api_token]
 				)
 
-
-
 				super(params)
 			end
 
