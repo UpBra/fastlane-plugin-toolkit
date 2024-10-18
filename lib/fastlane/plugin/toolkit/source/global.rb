@@ -12,6 +12,10 @@ module Platform
 	ANDROIDTV = :androidtv
 end
 
+module Product
+	GENERIC = :generic
+end
+
 module Configuration
 	DEBUG = :debug
 	ALPHA = :alpha
@@ -39,8 +43,9 @@ module Global
 
 	def self.setup(name:, options:)
 		self.name = name
-		self.platform = options.fetch(:platform, :ios).to_sym
-		self.configuration = options.fetch(:configuration, :beta).to_sym
+		self.platform = options.fetch(:platform, Platform::IOS).to_sym
+		self.product = options.fetch(:product, Product::GENERIC).to_sym
+		self.configuration = options.fetch(:configuration, Configuration::MAIN).to_sym
 		self.deploy = options.fetch(:deploy, false)
 		self.notify = options.fetch(:notify, false)
 		self.is_ci = FastlaneCore::Helper.ci?
