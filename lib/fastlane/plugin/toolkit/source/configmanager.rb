@@ -1,11 +1,20 @@
+# ----------------------------------------------------------------------
+#
+# ConfigManager
+#
+# ----------------------------------------------------------------------
 
 module ConfigManager
 
-	def self.load(filename)
+	def self.load(filename = 'Configfile')
 		Config.new(filename)
 	end
 
 	class Config
+
+		Platform = Toolkit::Platform
+		Product = Toolkit::Product
+		Configuration = Toolkit::Configuration
 
 		def initialize(filename)
 			paths = []
@@ -64,7 +73,7 @@ module ConfigManager
 		# block - Block to execute to override configuration values.
 		#
 		def for_platform(platform_name)
-			options = [Global.platform, ENV.fetch("FASTLANE_PLATFORM_NAME", nil)].map(&:to_s)
+			options = [Toolkit.platform, ENV.fetch("FASTLANE_PLATFORM_NAME", nil)].map(&:to_s)
 			value = platform_name.to_s
 
 			if options.include?(value)
@@ -78,7 +87,7 @@ module ConfigManager
 		# block - Block to execute to override configuration values.
 		#
 		def for_product(product_name)
-			options = [Global.product, ENV.fetch("FASTLANE_PRODUCT_NAME", nil)].map(&:to_s)
+			options = [Toolkit.product, ENV.fetch("FASTLANE_PRODUCT_NAME", nil)].map(&:to_s)
 			value = product_name.to_s
 
 			if options.include?(value)
@@ -92,7 +101,7 @@ module ConfigManager
 		# block - Block to execute to override configuration values.
 		#
 		def for_configuration(configuration_name)
-			options = [Global.configuration, ENV.fetch("FASTLANE_CONFIGURATION_NAME", nil)].map(&:to_s)
+			options = [Toolkit.configuration, ENV.fetch("FASTLANE_CONFIGURATION_NAME", nil)].map(&:to_s)
 			value = configuration_name.to_s
 
 			if options.include?(value)
