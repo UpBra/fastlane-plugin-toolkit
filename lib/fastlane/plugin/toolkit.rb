@@ -1,17 +1,20 @@
 require 'fastlane/plugin/toolkit/version'
 
 module Toolkit
-	# Return all .rb files inside the "actions" "helper" and "source" directories
+
+	def self.first_classes
+		['fastlane/plugin/toolkit/source/global', 'fastlane/plugin/toolkit/source/fastfile']
+	end
+
 	def self.all_classes
-		Dir[File.expand_path('**/{actions,helper,source}/*.rb', File.dirname(__FILE__))]
+		Dir[File.expand_path('**/{actions,helper,source}/*.rb', File.dirname(__FILE__))] - self.first_classes
 	end
 end
 
-require 'fastlane/plugin/toolkit/source/global.rb'
-require 'fastlane/plugin/toolkit/source/fastfile.rb'
+Toolkit.first_classes.each do |file|
+	require file
+end
 
-# By default we want to import all available actions and helpers
-# A plugin can contain any number of actions and plugins
-Toolkit.all_classes.each do |current|
-	require current
+Toolkit.all_classes.each do |file|
+	require file
 end
