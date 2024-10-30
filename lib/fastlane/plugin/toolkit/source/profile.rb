@@ -44,12 +44,12 @@ end
 class Profile
 
 	def self.ios(params = {})
-		params[:platform] ||= Platform::IOS
+		params[:platform] ||= Toolkit::Platform::IOS
 		Profile.new(params)
 	end
 
 	def self.android(params = {})
-		params[:platform] ||= Platform::ANDROID
+		params[:platform] ||= Toolkit::Platform::ANDROID
 		Profile.new(params)
 	end
 end

@@ -6,7 +6,7 @@
 
 # String
 
-class ::String
+class String
 
 	def tail(n = 15)
 		value = self.clone

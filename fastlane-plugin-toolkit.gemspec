@@ -4,7 +4,7 @@ require 'fastlane/plugin/toolkit/version'
 
 Gem::Specification.new do |spec|
 	spec.name          = 'fastlane-plugin-toolkit'
-	spec.version       = Fastlane::Toolkit::VERSION
+	spec.version       = Toolkit::VERSION
 	spec.author        = 'Blair Replogle'
 	spec.email         = 'UpBra@users.noreply.github.com'
 

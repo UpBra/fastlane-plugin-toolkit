@@ -4,7 +4,7 @@
 #
 # ----------------------------------------------------------------------
 
-module Platform
+module Toolkit::Platform
 	ALL = :all
 	IOS = :ios
 	TVOS = :tvos
@@ -12,7 +12,11 @@ module Platform
 	ANDROIDTV = :androidtv
 end
 
-module Configuration
+module Toolkit::Product
+	GENERIC = :generic
+end
+
+module Toolkit::Configuration
 	DEBUG = :debug
 	ALPHA = :alpha
 	BETA = :beta
@@ -23,31 +27,46 @@ module Configuration
 end
 
 module Fastlane::Actions::SharedValues
-	NAME = :GLOBAL_NAME
-	PLATFORM = :GLOBAL_PLATFORM
-	PRODUCT = :GLOBAL_PRODUCT
-	CONFIGURATION = :GLOBAL_CONFIGURATION
-	DEPLOY = :GLOBAL_DEPLOY
-	NOTIFY = :GLOBAL_NOTIFY
-	IS_CI = :GLOBAL_IS_CI
+	NAME = :TOOLKIT_NAME
+	PLATFORM = :TOOLKIT_PLATFORM
+	PRODUCT = :TOOLKIT_PRODUCT
+	CONFIGURATION = :TOOLKIT_CONFIGURATION
+	DEPLOY = :TOOLKIT_DEPLOY
+	NOTIFY = :TOOLKIT_NOTIFY
+	IS_CI = :TOOLKIT_IS_CI
 end
 
-module Global
+module Toolkit
 
 	Actions = Fastlane::Actions
 	SharedValues = Actions::SharedValues
 
 	def self.setup(name:, options:)
 		self.name = name
-		self.platform = options.fetch(:platform, :ios).to_sym
-		self.configuration = options.fetch(:configuration, :beta).to_sym
+		self.platform = options.fetch(:platform, Toolkit::Platform::IOS).to_sym
+		self.product = options.fetch(:product, Toolkit::Product::GENERIC).to_sym
+		self.configuration = options.fetch(:configuration, Toolkit::Configuration::MAIN).to_sym
 		self.deploy = options.fetch(:deploy, false)
 		self.notify = options.fetch(:notify, false)
 		self.is_ci = FastlaneCore::Helper.ci?
-	end
-end
 
-module Global
+		print
+	end
+
+	def self.print
+		params = {}
+		params[:platform] = self.platform
+		params[:product] = self.product
+		params[:configuration] = self.configuration
+		params[:deploy] = self.deploy?
+		params[:notify] = self.notify?
+		params[:is_ci] = self.is_ci?
+
+		FastlaneCore::PrintTable.print_values(
+			title: "Toolkit Summary",
+			config: params
+		)
+	end
 
 	def self.lane_context
 		Actions.lane_context
@@ -85,7 +104,7 @@ module Global
 		lane_context[SharedValues::CONFIGURATION] = value.to_sym
 	end
 
-	def self.deploy
+	def self.deploy?
 		lane_context[SharedValues::DEPLOY]
 	end
 
@@ -93,7 +112,7 @@ module Global
 		lane_context[SharedValues::DEPLOY] = value
 	end
 
-	def self.notify
+	def self.notify?
 		lane_context[SharedValues::NOTIFY]
 	end
 
@@ -128,7 +147,7 @@ class TerminalTable
 	end
 
 	def display
-		params = {title: title.blue, rows: rows}
+		params = {title: title.green, rows: rows}
 		table = Terminal::Table.new(params)
 
 		puts('')
