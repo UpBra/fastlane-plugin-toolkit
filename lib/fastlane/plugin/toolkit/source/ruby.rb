@@ -4,6 +4,19 @@
 #
 # -------------------------------------------------------------------------
 
+# Object
+
+class Object
+
+	def blank?
+		respond_to?(:empty?) ? empty? : to_s.empty?
+	end
+
+	def exists?
+		!(nil? || blank?)
+	end
+end
+
 # String
 
 class String
