@@ -33,12 +33,12 @@ module Fastlane
 					basename = File.basename(file)
 
 					Dir.chdir(folder) do
-						sh "zip -ur9 #{zipfile} #{basename}"
+						sh("zip -ur9 #{zipfile} #{basename}")
 					end
 				end
 
-				UI.success "Successfully created zipfile: #{zipfile}"
-				sh "unzip -l #{zipfile}"
+				UI.success("Successfully created zipfile: #{zipfile}")
+				sh("unzip -l #{zipfile}")
 
 				lane_context[SharedValues::ZIP_FILES_OUTPUT_FILE] = zipfile
 				zipfile
@@ -57,7 +57,7 @@ module Fastlane
 					FastlaneCore::ConfigItem.new(
 						key: :name,
 						env_name: 'ZIP_FILES_NAME',
-						description: 'Name of the output zip file',
+						description: 'Name of the output zip file'
 					),
 					FastlaneCore::ConfigItem.new(
 						key: :path,
@@ -69,7 +69,7 @@ module Fastlane
 						key: :file_paths,
 						type: Array,
 						optional: false,
-						description: 'Array of absolute paths to files to be included in the zip',
+						description: 'Array of absolute paths to files to be included in the zip'
 					)
 				]
 			end
