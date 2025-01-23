@@ -6,10 +6,11 @@
 
 class Profile
 
-	attr_accessor :platform, :configuration, :build_number, :values
+	attr_accessor :platform, :product, :configuration, :build_number, :values
 
 	def initialize(params = {})
 		self.platform = params[:platform]
+		self.product = params[:product]
 		self.configuration = params[:configuration]
 		self.build_number = params.fetch(:build_number, '1')
 		self.values = {}
