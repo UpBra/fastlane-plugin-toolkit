@@ -28,7 +28,8 @@ module Fastlane
 				# we want to make sure that our target folder exist already
 				FileUtils.mkdir_p(target_path)
 
-				filename = File.basename(file_path)
+				filename = params[:filename]
+				filename ||= File.basename(file_path)
 				target_file = File.join(target_path, filename)
 
 				UI.command "cp #{file_path} #{target_file}"
@@ -57,6 +58,11 @@ module Fastlane
 						description: "The directory in which you want your file copied",
 						optional: false,
 						default_value: 'artifacts'
+					),
+					FastlaneCore::ConfigItem.new(
+						key: :filename,
+						description: "Name of copied file. Default value is existing filename",
+						optional: true
 					)
 				]
 			end
