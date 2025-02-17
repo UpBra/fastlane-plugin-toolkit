@@ -28,3 +28,12 @@ class String
 		lines[start..-1].join
 	end
 end
+
+# NilClass
+
+class NilClass
+
+	def to_sym
+		nil
+	end
+end

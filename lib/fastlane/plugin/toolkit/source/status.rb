@@ -34,7 +34,10 @@ module Status
 	end
 
 	def self.setup_jenkins
-		return unless FastlaneCore::Env.truthy?('JENKINS_HOME')
+		unless FastlaneCore::Env.truthy?('JENKINS_HOME')
+			FastlaneCore::UI.important("Setup jenkins?! This isn't a jenkins...")
+			return
+		end
 
 		self.title = "#{ENV.fetch('JOB_NAME', nil)}: #{ENV.fetch('BUILD_NUMBER', nil)}"
 
@@ -47,6 +50,20 @@ module Status
 			self.add_fact('HASH', ENV.fetch('GIT_COMMIT', nil))
 			self.add_fact('GIT_LOG', `git log -1 --pretty=%B`.strip)
 		end
+	end
+
+	def self.setup_github
+		unless FastlaneCore::Env.truthy?('GITHUB_ACTIONS')
+			FastlaneCore::UI.important("Setup github?! This isn't a github...")
+			return
+		end
+
+		self.title = ENV.fetch('GITHUB_REPOSITORY', nil).to_s
+
+		self.add_fact('EVENT', ENV.fetch('GITHUB_EVENT_NAME', nil))
+		self.add_fact('SHA', ENV.fetch('GITHUB_SHA', nil))
+		self.add_fact('HEAD', ENV.fetch('GITHUB_HEAD_REF', nil))
+		self.add_fact('GIT_LOG', `git log -1 --pretty=%B`.strip)
 	end
 
 	def self.failed(exception)

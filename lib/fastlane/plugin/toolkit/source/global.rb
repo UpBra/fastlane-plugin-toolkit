@@ -42,10 +42,13 @@ module Toolkit
 	SharedValues = Actions::SharedValues
 
 	def self.setup(name:, options:)
+		defaults = {}
+		yield(defaults) if block_given?
+		options = defaults.merge(options)
 		self.name = name
-		self.platform = options.fetch(:platform, Toolkit::Platform::IOS).to_sym
-		self.product = options.fetch(:product, Toolkit::Product::GENERIC).to_sym
-		self.configuration = options.fetch(:configuration, Toolkit::Configuration::MAIN).to_sym
+		self.platform = options.fetch(:platform, nil).to_sym
+		self.product = options.fetch(:product, nil).to_sym
+		self.configuration = options.fetch(:configuration, nil).to_sym
 		self.deploy = options.fetch(:deploy, false)
 		self.notify = options.fetch(:notify, false)
 		self.is_ci = FastlaneCore::Helper.ci?
