@@ -34,8 +34,8 @@ module Status
 	end
 
 	def self.setup_jenkins
-		if FastlaneCore::Env.truthy?('JENKINS_HOME')
-			UI.warning("This isn't a jenkins...")
+		unless FastlaneCore::Env.truthy?('JENKINS_HOME')
+			FastlaneCore::UI.important("Setup jenkins?! This isn't a jenkins...")
 			return
 		end
 
@@ -53,8 +53,8 @@ module Status
 	end
 
 	def self.setup_github
-		if FastlaneCore::Env.truthy?('GITHUB_ACTIONS')
-			UI.warning("This isn't a github...")
+		unless FastlaneCore::Env.truthy?('GITHUB_ACTIONS')
+			FastlaneCore::UI.important("Setup github?! This isn't a github...")
 			return
 		end
 
