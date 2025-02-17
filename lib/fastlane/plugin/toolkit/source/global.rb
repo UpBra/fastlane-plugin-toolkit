@@ -42,7 +42,7 @@ module Toolkit
 	SharedValues = Actions::SharedValues
 
 	def self.setup(name:, options:)
-		defaults = Hash.new
+		defaults = {}
 		yield(defaults) if block_given?
 		options = defaults.merge(options)
 		self.name = name

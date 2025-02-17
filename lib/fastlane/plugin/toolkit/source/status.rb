@@ -58,7 +58,7 @@ module Status
 			return
 		end
 
-		self.title = "#{ENV.fetch('GITHUB_REPOSITORY', nil)}"
+		self.title = ENV.fetch('GITHUB_REPOSITORY', nil).to_s
 
 		self.add_fact('EVENT', ENV.fetch('GITHUB_EVENT_NAME', nil))
 		self.add_fact('SHA', ENV.fetch('GITHUB_SHA', nil))
