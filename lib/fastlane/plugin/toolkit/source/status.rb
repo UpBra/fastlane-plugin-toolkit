@@ -60,9 +60,9 @@ module Status
 
 		self.title = ENV.fetch('GITHUB_REPOSITORY', nil).to_s
 
+		self.add_fact('WORKFLOW', ENV.fetch('GITHUB_WORKFLOW', nil))
 		self.add_fact('EVENT', ENV.fetch('GITHUB_EVENT_NAME', nil))
 		self.add_fact('SHA', ENV.fetch('GITHUB_SHA', nil))
-		self.add_fact('HEAD', ENV.fetch('GITHUB_HEAD_REF', nil))
 		self.add_fact('GIT_LOG', `git log -1 --pretty=%B`.strip)
 	end
 
