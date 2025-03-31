@@ -104,13 +104,6 @@ module Status
 	Actions = Fastlane::Actions
 	SharedValues = Actions::SharedValues
 
-	def self.add_appcenter_facts
-		return unless name ||= Actions.lane_context.fetch(SharedValues::APPCENTER_DEPLOY_APP_DISPLAY_NAME)
-		return unless value ||= Actions.lane_context.fetch(SharedValues::APPCENTER_DEPLOY_APP_CONSOLE_URL)
-
-		Status.add_fact(name, value)
-	end
-
 	def self.add_firebase_facts
 		return unless name ||= Actions.lane_context.fetch(SharedValues::FIREBASE_DEPLOY_APP_DISPLAY_NAME)
 		return unless value ||= Actions.lane_context.fetch(SharedValues::FIREBASE_DEPLOY_APP_CONSOLE_URL)
