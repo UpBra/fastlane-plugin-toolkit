@@ -31,6 +31,7 @@ module Fastlane::Actions::SharedValues
 	PLATFORM = :TOOLKIT_PLATFORM
 	PRODUCT = :TOOLKIT_PRODUCT
 	CONFIGURATION = :TOOLKIT_CONFIGURATION
+	CHECK = :TOOLKIT_CHECK
 	DEPLOY = :TOOLKIT_DEPLOY
 	NOTIFY = :TOOLKIT_NOTIFY
 	IS_CI = :TOOLKIT_IS_CI
@@ -107,6 +108,14 @@ module Toolkit
 		lane_context[SharedValues::CONFIGURATION] = value.to_sym
 	end
 
+	def self.check?
+		lane_context[SharedValues::CHECK]
+	end
+
+	def self.check=(value)
+		lane_context[SharedValues::CHECK] = value
+	end
+
 	def self.deploy?
 		lane_context[SharedValues::DEPLOY]
 	end
@@ -129,6 +138,30 @@ module Toolkit
 
 	def self.is_ci=(value)
 		lane_context[SharedValues::IS_CI] = value.to_s.downcase == 'true'
+	end
+
+	def self.require_property(arg, message)
+		UI.user_error!(message) if arg.nil? || arg.empty?
+		arg
+	end
+
+	def self.unwrap(var)
+		return nil if var.nil?
+		return nil if var.to_s.empty?
+
+		yield(var) if block_given?
+		var
+	end
+
+	def self.present?(var)
+		return false if var.nil?
+		return false if var.to_s.empty?
+
+		return true
+	end
+
+	def self.profiles
+		@@profiles ||= []
 	end
 end
 
