@@ -50,6 +50,7 @@ module Toolkit
 		self.platform = options.fetch(:platform, nil).to_sym
 		self.product = options.fetch(:product, nil).to_sym
 		self.configuration = options.fetch(:configuration, nil).to_sym
+		self.check = options.fetch(:check, false)
 		self.deploy = options.fetch(:deploy, false)
 		self.notify = options.fetch(:notify, false)
 		self.is_ci = FastlaneCore::Helper.ci?
@@ -62,6 +63,7 @@ module Toolkit
 		params[:platform] = self.platform
 		params[:product] = self.product
 		params[:configuration] = self.configuration
+		params[:check] = self.check?
 		params[:deploy] = self.deploy?
 		params[:notify] = self.notify?
 		params[:is_ci] = self.is_ci?
