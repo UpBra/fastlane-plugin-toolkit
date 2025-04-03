@@ -18,6 +18,7 @@ end
 
 module Toolkit::Configuration
 	DEBUG = :debug
+	ADHOC = :adhoc
 	ALPHA = :alpha
 	BETA = :beta
 	MAIN = :main
