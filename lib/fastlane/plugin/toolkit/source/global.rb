@@ -164,7 +164,7 @@ module Toolkit
 	end
 
 	def self.profiles
-		@@profiles ||= []
+		@profiles ||= []
 	end
 end
 
