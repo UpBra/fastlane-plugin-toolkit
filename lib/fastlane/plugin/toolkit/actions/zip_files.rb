@@ -29,7 +29,7 @@ module Fastlane
 				zipfile = File.expand_path(output_path + filename)
 
 				# File list
-				file_paths = params[:file_paths].reject(&:blank?).compact
+				file_paths = params[:file_paths].compact.reject(&:blank?)
 				file_paths = file_paths.map { |i| Shellwords.shellescape(i) }
 
 				file_paths.each do |file|
