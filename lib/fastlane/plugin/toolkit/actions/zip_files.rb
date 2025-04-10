@@ -29,7 +29,7 @@ module Fastlane
 				zipfile = File.expand_path(output_path + filename)
 
 				# File list
-				file_paths = params[:file_paths].reject(&:empty?).compact
+				file_paths = params[:file_paths].reject(&:blank?).compact
 				file_paths = file_paths.map { |i| Shellwords.shellescape(i) }
 
 				file_paths.each do |file|
@@ -67,7 +67,7 @@ module Fastlane
 						key: :path,
 						env_name: 'ZIP_FILES_PATH',
 						description: 'The path where to save the generated zip file. The name is appended to this path for you',
-						default_value: 'output'
+						default_value: 'artifacts'
 					),
 					FastlaneCore::ConfigItem.new(
 						key: :file_paths,
