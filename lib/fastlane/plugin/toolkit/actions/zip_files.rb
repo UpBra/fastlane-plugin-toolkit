@@ -20,12 +20,16 @@ module Fastlane
 				# Archive Path and Filename
 				output_path = params[:path]
 				output_path += '/' unless output_path.end_with?('/')
+
+				# Ensure output path folder exists
+				sh("mkdir -p #{output_path}")
+
 				filename = params[:name]
 				filename += '.zip' unless filename.end_with?('.zip')
 				zipfile = File.expand_path(output_path + filename)
 
 				# File list
-				file_paths = params[:file_paths]
+				file_paths = params[:file_paths].compact.reject(&:blank?)
 				file_paths = file_paths.map { |i| Shellwords.shellescape(i) }
 
 				file_paths.each do |file|
@@ -63,7 +67,7 @@ module Fastlane
 						key: :path,
 						env_name: 'ZIP_FILES_PATH',
 						description: 'The path where to save the generated zip file. The name is appended to this path for you',
-						default_value: 'output'
+						default_value: 'artifacts'
 					),
 					FastlaneCore::ConfigItem.new(
 						key: :file_paths,
